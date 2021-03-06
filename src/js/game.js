@@ -1,7 +1,7 @@
 //
 // simple Tic-Tac-Toe game
-// JS desktop version
-// ver. 0.3: pictures only, no colors
+// JS desktop and mobile version
+// ver. 0.4: pictures only, no colors, scale optimization
 // Gregory Skomorovsky, readln.me
 //
 
@@ -10,10 +10,18 @@ const gridColor      = "#888888";
 let mainCanvasWidth  = 500;
 let mainCanvasHeight = 800;
 
+let scale = 1;
+
+if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    scale = innerWidth / mainCanvasWidth;
+    mainCanvasWidth  = innerWidth;
+    mainCanvasHeight = innerHeight; 
+  } 
+
 const gameField_x      = 0;
 const gameField_y      = 0;
-const gameFieldWidth   = 500;
-const gameFieldHeight  = 500;
+const gameFieldWidth   = 500 * scale;
+const gameFieldHeight  = 500 * scale;
 const userColor        = "#FF9900";
 const computerColor    = "#9900CC";
 
@@ -22,6 +30,36 @@ const canvasBackgroundColor="#FFFFFF";
 const emptyColor    = "#FFFFFF";
 const winnerColor   = "red";
 const strokeColor   = "#BBBBBB";
+
+// message image coordinates
+const imgX = 65  * scale;
+const imgY = 510 * scale;
+const imgW = 393 * scale;
+const imgH = 70  * scale;
+//
+
+// dimension option buttons
+const dimButtonWidth  = 110 * scale;
+const dimButtonHeight = 35  * scale;
+const button33_x      = 1   * scale;
+const button33_y      = 600 * scale;
+const button55_x      = 130 * scale;
+const button55_y      = 600 * scale;
+const button77_x      = 260 * scale;
+const button77_y      = 600 * scale;
+const button10_x      = 389 * scale;
+const button10_y      = 600 * scale;
+
+// mode option buttons
+const modeButtonWidth  = 228 * scale;
+const modeButtonHeight = 70  * scale;
+const buttonClassic_x  = 1   * scale;
+const buttonClassic_y  = 680 * scale;
+const buttonCats_x     = 270 * scale;
+const buttonCats_y     = 680 * scale;
+
+//
+
 
 var viewMode = "Classic"; // "Cats", "Colors"
 
@@ -446,16 +484,14 @@ context.fillRect(0, 0, canvas.width, canvas.height);
 
 let field = new GameField (3, mainCanvasWidth, emptyColor);
 
+//
+//context.setTransform(0.5, 0, 0, 0.5, 0, 0);
+//
 field.displayField();
-
+//
 
 function message (text) {
 	
-	const imgX = 65;
-	const imgY = 510;
-	const imgW = 393;
-	const imgH = 70;
-
 	let img_msg = new Image();
 	context.globalAlpha = 0.5;
 
@@ -501,15 +537,10 @@ function message (text) {
 
 message("Clear");
 
-const dimButtonWidth   = 110;
-const dimButtonHeight  = 35;
-const modeButtonWidth  = 228;
-const modeButtonHeight = 70;
+
 
 // button 3x3
 
-	const button33_x = 1;
-	const button33_y = 600;
 	let img33 = new Image();
 	img33.src = 'img/33.png';
 	img33.onload = function() {
@@ -520,8 +551,6 @@ const modeButtonHeight = 70;
 
 // button 5x5
 
-	const button55_x = 130;
-	const button55_y = 600;
 	let img55 = new Image();
 	img55.src = 'img/55.png';
 	img55.onload = function() {
@@ -533,8 +562,6 @@ const modeButtonHeight = 70;
 
 // button 7x7
 
-	const button77_x = 260;
-	const button77_y = 600;
 	let img77 = new Image();
 	img77.src = 'img/77.png';
 	img77.onload = function() {
@@ -546,8 +573,6 @@ const modeButtonHeight = 70;
 
 // button 10x10
 
-	const button10_x = 389;
-	const button10_y = 600;
 	img1010 = new Image();
 	img1010.src = 'img/1010.png';
 	img1010.onload = function() {
@@ -558,8 +583,6 @@ const modeButtonHeight = 70;
 
 // button classic
 
-	const buttonClassic_x = 1;
-	const buttonClassic_y = 680;
 	imgClassic = new Image();
 	imgClassic.src = 'img/classic.png';
 	imgClassic.onload = function() {
@@ -570,8 +593,6 @@ const modeButtonHeight = 70;
 
 // button cats
 
-	const buttonCats_x = 270;
-	const buttonCats_y = 680;
 	imgCats = new Image();
 	imgCats.src = 'img/cats.png';
 	imgCats.onload = function() {
@@ -695,8 +716,6 @@ function gameDriver (x, y) {
 	// ai imit
 
 	invariant = goTrueFalse();
-
-	console.log("invariant=", invariant);
 
 	// return to listening
 
