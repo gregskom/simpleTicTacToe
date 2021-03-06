@@ -1,7 +1,7 @@
 //
 // simple Tic-Tac-Toe game
 // JS desktop version
-// ver. 0.2: pictures only, no colors
+// ver. 0.3: pictures only, no colors
 // Gregory Skomorovsky, readln.me
 //
 
@@ -277,7 +277,7 @@ function doPCgame () {
 		}
 		
 		// there is just 1 free cell to user's victory in the current vector
-		if ((userTotal == field.dimension - 1) && (freeIndex >= 0)) {
+		if ((invariant) && (userTotal == field.dimension - 1) && (freeIndex >= 0)) {
 			field.cells[freeIndex].color = user2.color;
 			return 1;
 		}
@@ -311,7 +311,7 @@ function doPCgame () {
 		}
 		
 		// there is just 1 free cell to user's victory in the current vector
-		if ((userTotal == field.dimension - 1) && (freeIndex >= 0)) {
+		if ((invariant) && (userTotal == field.dimension - 1) && (freeIndex >= 0)) {
 			field.cells[freeIndex].color = user2.color;
 			return 1;
 		}
@@ -346,7 +346,7 @@ function doPCgame () {
 		}
 		
 		// there is just 1 free cell to user's victory in the current vector
-		if ((userTotal == field.dimension - 1) && (freeIndex >= 0)) {
+		if ((invariant) && (userTotal == field.dimension - 1) && (freeIndex >= 0)) {
 			field.cells[freeIndex].color = user2.color;
 			return 1;
 		}
@@ -381,7 +381,7 @@ function doPCgame () {
 		}
 		
 		// there is just 1 free cell to user's victory in the current vector
-		if ((userTotal == field.dimension - 1) && (freeIndex >= 0)) {
+		if ((invariant) && (userTotal == field.dimension - 1) && (freeIndex >= 0)) {
 			field.cells[freeIndex].color = user2.color;
 			return 1;
 		}
@@ -420,8 +420,20 @@ return 0;
 
 } //function doPCgame 
 
+
+function goTrueFalse() {
+
+	let random = Math.floor (Math.random() * 100);
+
+	return (0 <= random && random < 50) ? true : false;
+
+} // function goTrueFalse
+
+
+
 //=====================================================================================
 
+let invariant = true; // ai imitation
 
 const canvas = document.querySelector("canvas");
 const context = canvas.getContext("2d");
@@ -679,6 +691,14 @@ function gameDriver (x, y) {
 			field.displayField();
 		}
 
+
+	// ai imit
+
+	invariant = goTrueFalse();
+
+	console.log("invariant=", invariant);
+
+	// return to listening
 
 	canvas.addEventListener('click', clickEvent, {
 	once: true
