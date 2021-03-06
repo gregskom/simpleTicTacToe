@@ -1,7 +1,7 @@
 //
 // simple Tic-Tac-Toe game
 // JS desktop and mobile version
-// ver. 0.4: pictures only, no colors, scale optimization
+// ver. 0.5: pictures only, no colors, scale optimization, header = 0 if mobile
 // Gregory Skomorovsky, readln.me
 //
 
@@ -15,7 +15,9 @@ let scale = 1;
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
     scale = innerWidth / mainCanvasWidth;
     mainCanvasWidth  = innerWidth;
-    mainCanvasHeight = innerHeight; 
+    mainCanvasHeight = innerHeight;
+    const pageHeader = document.getElementById("head");
+	pageHeader.style.height = 0;
   } 
 
 const gameField_x      = 0;
@@ -466,7 +468,6 @@ function goTrueFalse() {
 	return (0 <= random && random < 50) ? true : false;
 
 } // function goTrueFalse
-
 
 
 //=====================================================================================
